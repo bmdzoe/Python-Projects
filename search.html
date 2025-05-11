@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <style>
+        body {
+            font-family:Arial, Helvetica, sans-serif;
+            background-color: beige;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: white;;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .movie {
+            padding: 10px;
+            background-color: #f9f9f9;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .movie strong {
+            font-size: 18px;
+        }
+        .movie p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Movie Search</h1>
+        
+        <form action="/search" method="get">
+            <input type="text" name="title" placeholder="Enter movie title" required>
+            <button type="submit">Search</button>
+        </form>
+    
+        {% if results %}
+            <h2>Results:</h2>
+            <div>
+                <strong>{{ results.title}}</strong> ({{ results.year }})<br>
+                Genre: {{ results.genre }}<br>
+                Rating: {{ results.rating }}<br>
+                Streaming On:
+                {% if results.streaming_providers %}
+                {{ results.streaming_providers|join(', ') }}<br>
+                {% else %}
+                Not available on any streaming service.<br>
+                {% endif %}
+            </div>
+    </div>
+    {% elif error %}
+        <p style="color:red">{{ error }}</p> 
+    {% endif %}
+    </div>
+    </body>
+</html>
